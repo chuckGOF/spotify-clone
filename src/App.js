@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useEffect, useState } from "react";
+import { getTokenFromUrl } from "./spotify";
+import Login from "./components/Login";
+import Player from "./components/Player";
+import SpotifyWebApi from "spotify-web-api-js";
+
+const spotify = new SpotifyWebApi();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [token, setToken] = useState();
+
+	useEffect(() => {
+		const _token = getTokenFromUrl();
+		// clear token after save in variable
+		window.location.hash = "";
+
+		if (_token) {
+			setToken(_token);
+			console.log(_token);
+			spotify.setAccessToken(_token.access_token);
+
+			spotify.getMe().then((user) => {
+				console.log(user);
+			});
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return <div className="App">{token ? <Player /> : <Login />}</div>;
 }
 
 export default App;
