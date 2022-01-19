@@ -23,6 +23,10 @@ export const getTokenFromUrl = () => {
 		}, {});
 };
 
-export const loginUrl = `${authEndPoint}response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+export const loginUrl = `${authEndPoint}client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
 	"%20"
-)}&show_dialog=true)`;
+)}&response_type=token&show_dialog=true`;
+
+// export const loginUrl = `${authEndPoint}response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+// 	"%20"
+// )}&show_dialog=true)`;

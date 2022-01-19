@@ -1,0 +1,7 @@
+/* .player {
+    display: flex;
+} */
+
+.player__body {
+    display: flex;
+}
