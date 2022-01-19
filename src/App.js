@@ -35,6 +35,14 @@ function App() {
 					});
 				})
 				.catch((error) => console.log(error));
+
+			spotify.getUserPlaylists().then(playlists => {
+				console.log(playlists)
+				dispatch({
+					type: 'SET_PLAYLISTS',
+					playlists: playlists
+				})
+			})
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
