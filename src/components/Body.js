@@ -9,6 +9,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 function Body() {
   const [{ discover_weekly }] = useStateValue();
+
+  console.log(discover_weekly)
   return (
     <div className="body">
       <Header />
@@ -32,8 +34,8 @@ function Body() {
           <FavoriteIcon fontSize="large" />
           <MoreHorizIcon />
         </div>
-        {discover_weekly?.tracks?.items?.map((item) => (
-          <SongRow track={item.track} />
+        {discover_weekly?.tracks?.items?.map((item, index) => (
+          <SongRow key={index} track={item.track} />
         ))}
       </div>
     </div>
