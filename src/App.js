@@ -9,46 +9,53 @@ import { useStateValue } from "./StateProvider";
 const spotify = new SpotifyWebApi();
 
 function App() {
-	const [{ user, token }, dispatch] = useStateValue();
+  const [{ user, token }, dispatch] = useStateValue();
 
-	useEffect(() => {
-		const hash = getTokenFromUrl();
-		// clear token after save in variable
-		window.location.hash = "";
-		const _token = hash.access_token;
+  useEffect(() => {
+    const hash = getTokenFromUrl();
+    // clear token after save in variable
+    window.location.hash = "";
+    const _token = hash.access_token;
 
-		if (_token) {
-			dispatch({
-				type: "SET_TOKEN",
-				token: _token,
-			});
+    if (_token) {
+      dispatch({
+        type: "SET_TOKEN",
+        token: _token
+      });
 
-			spotify.setAccessToken(_token);
-			spotify
-				.getMe()
-				.then((user) => {
-					console.log(user);
+      spotify.setAccessToken(_token);
+      spotify
+        .getMe()
+        .then((user) => {
+          console.log(user);
 
-					dispatch({
-						type: "SET_USER",
-						user: user,
-					});
-				})
-				.catch((error) => console.log(error));
+          dispatch({
+            type: "SET_USER",
+            user: user
+          });
+        })
+        .catch((error) => console.log(error));
 
-			spotify.getUserPlaylists().then(playlists => {
-				console.log(playlists)
-				dispatch({
-					type: 'SET_PLAYLISTS',
-					playlists: playlists
-				})
-			})
-		}
+      spotify.getUserPlaylists().then((playlists) => {
+        console.log(playlists);
+        dispatch({
+          type: "SET_PLAYLISTS",
+          playlists: playlists
+        });
+      });
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+      spotify.getPlaylist().then((resp) => {
+        dispatch({
+          type: "SET_DISCOVER_WEEKLY",
+          discover_weekly: resp
+        });
+      });
+    }
 
-	return <div className="App">{token ? <Player /> : <Login />}</div>;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  return <div className="App">{token ? <Player /> : <Login />}</div>;
 }
 
 export default App;
