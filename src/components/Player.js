@@ -5,17 +5,17 @@ import Body from "./Body";
 import Footer from "./Footer";
 import "../styles/Player.css";
 
-function Player() {
-  // const [{ user }] = useStateValue();
-  return (
-    <div className="player">
-      <div className="player__body">
-        <Sidebar />
-        <Body />
-      </div>
-      <Footer />
-    </div>
-  );
+function Player({ spotify }) {
+	// const [{ user }] = useStateValue();
+	return (
+		<div className="player">
+			<div className="player__body">
+				<Sidebar spotify={spotify} />
+				<Body />
+			</div>
+			<Footer spotify={spotify} />
+		</div>
+	);
 }
 
 export default Player;

@@ -8,19 +8,40 @@ import RepeatIcon from "@mui/icons-material/Repeat";
 import { Grid, Slider } from "@mui/material";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import VolumeDownIcon from "@mui/icons-material/VolumeDown";
+import { useStateValue } from "../StateProvider";
 
-function Footer() {
+function Footer({ spotify }) {
+	const [{ current_playing, discover_weekly }] = useStateValue();
+
+	// spotify.play({ context_uri: discover_weekly?.tracks?.items[0]?.track?.uri})
+
 	return (
 		<div className="footer">
 			<div className="footer__left">
 				<img
 					className="footer__albumLogo"
-					src="https://getheavy.com/wp-content/uploads/2019/12/spotify2019-830x350.jpg"
+					src={
+						current_playing
+							? current_playing.images[0].url
+							: discover_weekly?.tracks?.items[0]?.track?.album
+									?.images[0]?.url
+					}
+					// src="https://getheavy.com/wp-content/uploads/2019/12/spotify2019-830x350.jpg"
 					alt=""
 				/>
 				<div className="footer__songInfo">
-					<h4>Yeah!</h4>
-					<p>Usher</p>
+					<h4>
+						{current_playing
+							? current_playing.name
+							: discover_weekly?.tracks?.items[0]?.track?.name}
+					</h4>
+					<p>
+						nothing
+						{/* {current_playing.artists
+							.map((artist) => artist.name)
+							.join(", ")}{" "}
+						-{" "} */}
+					</p>
 				</div>
 			</div>
 
