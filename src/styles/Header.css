@@ -18,6 +18,8 @@
 .header__left > input {
   border: none;
   width: 100%;
+  outline: none;
+  background: none;
 }
 
 .header__right {
